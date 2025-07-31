@@ -10,9 +10,18 @@ import PhotosUI
 class ImagePickerVC: UIViewController{
     @IBOutlet var addImageBtn: [UIButton]!
     @IBOutlet var chosenImageViews: [UIImageView]!
-//    @IBOutlet weak var chosenImageView: UIImageView!
+    //    @IBOutlet weak var chosenImageView: UIImageView!
     var maxImageCount: Int = 100
-    var index:Int = .zero
+    var indexImage:Int = .zero
+    var listImage:[UIImage] = []{
+        didSet{
+            if !listImage.isEmpty {
+                chosenImageViews.forEach{$0.image = listImage[$0.tag]}
+                //                self.chosenImageViews[indexImage].image = listImage[indexImage]
+            }
+            print("listImage: \(listImage)")
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -30,31 +39,36 @@ class ImagePickerVC: UIViewController{
 //extension delega
 extension ImagePickerVC: PHPickerViewControllerDelegate{
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        dismiss(animated: true)
+        picker.dismiss(animated: true)
+
+        var listImage = [UIImage]()
         results.forEach { res in
             if(res.itemProvider.canLoadObject(ofClass: UIImage.self)){
-                res.itemProvider.loadObject(ofClass: UIImage.self) { [weak self]image, error in
-//                    DispatchQueue.main.sync {
-//                        self?.chosenImageViews.append(image as! UIImageView)
-                        self?.chosenImageViews[self!.index].image = image as? UIImage
-                        self?.index += 1
-//                    }
+                res.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                    
+                    //                        guard let self else { return }
+                    //                        listImage.append(image!)
+                    //                        if listImage.count == results.count{
+                    //                            self.chosenImageViews
+                    //                        }
+                    let image = image as! UIImage
+                    listImage.append(image)
+                    //                        print("========> 1", indexImage, Date())
+                    //                        self?.chosenImageViews[indexImage].image = image as? UIImage
+                    //                        print("========> 2®", indexImage, Date())
+                    self?.indexImage += 1
+                    if listImage.count == 3 {
+                        DispatchQueue.main.async {
+                            self?.listImage = listImage
+                        }
+                    }
+                   
                 }
+                
+                
             }
         }
-        self.index = 0
-        //        if let itemProvider = results.last?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self){
-//            let previousImage = chosenImageViews?.image
-//            itemProvider.loadObject(ofClass: UIImage.self) {[weak self] image, error in
-//                DispatchQueue.main.async {
-//                    guard let self = self,
-//                          let image = image as? UIImage, self.chosenImageView.image == previousImage else{
-//                        return
-//                    }
-//                    self.chosenImageView.image = image
-//                }
-//            }
-//        }
+        
     }
 }
 //extension ImagePickerVC: PHPickerViewControllerDelegate {
