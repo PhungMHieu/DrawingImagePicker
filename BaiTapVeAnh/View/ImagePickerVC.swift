@@ -62,7 +62,7 @@ class ImagePickerVC: UIViewController{
         
     }
     @IBAction func createPoster(_ sender: Any) {
-        let frame = finalImageView.frame
+        let frame = finalImageView.bounds
         let textBoundHeight:CGFloat = 24
         let width = frame.width
         let height = frame.height - textBoundHeight
