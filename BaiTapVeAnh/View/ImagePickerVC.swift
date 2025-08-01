@@ -60,46 +60,33 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             self.present(picker, animated: true)
         }
     }
-    func drawImage(finalImageView: UIImageView){
+    func drawImage(finalImageView: UIImageView, numOfImage: Int){
         let frame = finalImageView.bounds
         let textBoundHeight:CGFloat = 24
         let width = frame.width
         let height = frame.height - textBoundHeight
         let renderer = UIGraphicsImageRenderer(bounds: frame)
         let img = renderer.image { ctx in
-            let frame1 = CGRect(x: 0, y: 0, width:width*7/20, height: height)
-            let frame3 = CGRect(x: width*13/20, y: 0, width: width*7/20, height: height)
-            listImage[0].draw(in: frame1)
-            listImage[2].draw(in: frame3)
-            
-            let rectPath = UIBezierPath()
-            rectPath.move(to: CGPoint(x: width/4, y: 0))
-            rectPath.addLine(to: CGPoint(x: 7*width/20, y: height))
-            rectPath.addLine(to: CGPoint(x: 13*width/20, y: height))
-            rectPath.addLine(to: CGPoint(x: 3*width/4, y: 0))
-            rectPath.close()
-            
-            rectPath.addClip()
-            let frame2 = CGRect(x: width/4, y: 0, width: width/2, height: height)
-            listImage[1].draw(in: frame2)
-            UIGraphicsGetCurrentContext()?.resetClip()
-            
-            let borderPath = UIBezierPath()
-            borderPath.move(to: CGPoint(x: width/4, y: 0))
-            borderPath.addLine(to: CGPoint(x: 7*width/20, y: height))
-            borderPath.move(to: CGPoint(x: width*3/4, y: 0))
-            borderPath.addLine(to: CGPoint(x: 13*width/20, y: height))
+            for i in 0..<numOfImage{
+                let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage), y: 0, width: width/CGFloat(numOfImage), height: height)
+                listImage[i].draw(in: frame)
+            }
+            let path =  UIBezierPath()
+            for i in 1..<numOfImage{
+                let iCGFloat = CGFloat(i)
+                let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
+                if(i % 2 != 0){
+                    path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(width/(4*numOfImageCGFloat)), y: 0))
+                    path.addLine(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)+(width/(4*numOfImageCGFloat)), y: height))
+                }else{
+                    path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)+(width/(4*numOfImageCGFloat)), y: 0))
+                    path.addLine(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(width/(4*numOfImageCGFloat)), y: height))
+                }
+            }
             UIColor.white.setStroke()
-            borderPath.lineWidth = 4
-            borderPath.stroke()
-            
-            UIColor.systemTeal.setFill()
-            UIBezierPath(rect: CGRect(origin: .init(x: .zero, y: height), size: .init(width: width, height: textBoundHeight))).fill()
-            
-            let listAttributedText = listText
-            listAttributedText[0].draw(in: .init(x: 0, y: height, width: width/3, height: textBoundHeight))
-            listAttributedText[1].draw(in: .init(x: width/3, y: height, width: width/3, height: textBoundHeight))
-            listAttributedText[2].draw(in: .init(x: width * 2/3, y: height, width: width/3, height: textBoundHeight))
+            path.lineWidth = 4
+            path.stroke()
+            path.close()
         }
         finalImage = img
         finalImageView.image = img
@@ -128,7 +115,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         
     }
     @IBAction func createPoster(_ sender: Any) {
-        drawImage(finalImageView: self.finalImageView)
+        drawImage(finalImageView: self.finalImageView,numOfImage: 5)
         resetData()
     }
     @IBAction func save(_ sender: Any) {
@@ -163,13 +150,15 @@ extension ImagePickerVC: PHPickerViewControllerDelegate{
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
         //        var listImage: [UIImage] = Array(repeating: UIImage(), count: results.count)
+//        var listImage: [Int:UIImage] = [:]
         for i in 0..<results.count{
             let res = results[i]
             if(res.itemProvider.canLoadObject(ofClass: UIImage.self)){
                 res.itemProvider.loadObject(ofClass: UIImage.self) { [weak self]image, error in
+//                    listImage[i] = image as? UIImage
                     //                    listImage[i] = image as! UIImage
                     //                    if(listImage.count == self?.numberOfImage){
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         self?.listImage.append(image as! UIImage)
                     }
                     //                    }
