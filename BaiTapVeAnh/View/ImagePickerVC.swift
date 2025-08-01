@@ -66,60 +66,129 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         let width = frame.width
         let height = frame.height - textBoundHeight
         let renderer = UIGraphicsImageRenderer(bounds: frame)
-        let additionWidth:CGFloat = width / CGFloat(4*numOfImage)
+        let additionWidth:CGFloat = width / CGFloat(6*numOfImage)
         let singleImageWidth = (width/CGFloat(numOfImage))
-        let img = renderer.image { ctx in
-            for i in 0..<numOfImage{
-                if(i%2 == 0){
-                   
-                    if(i == 0){
-                        let width = singleImageWidth+CGFloat(additionWidth)
-                        let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage), y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
-                        listImage[i].draw(in: frame)
-                    }else if(i == numOfImage-1){
-                        let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage) - additionWidth, y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
-                        listImage[i].draw(in: frame)
-                    }else{
-                        let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: width/CGFloat(numOfImage)+2*additionWidth, height: height)
-                        listImage[i].draw(in: frame)
+        if(numOfImage % 2 != 0){
+            let img = renderer.image { ctx in
+                for i in 0..<numOfImage{
+                    if(i%2 == 0){
+                        if(i == 0){
+                            let width = singleImageWidth+CGFloat(additionWidth)
+                            let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage), y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
+                            listImage[i].draw(in: frame)
+                        }else if(i == numOfImage-1){
+                            let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage) - additionWidth, y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
+                            listImage[i].draw(in: frame)
+                        }else{
+                            let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: singleImageWidth+2*additionWidth, height: height)
+                            listImage[i].draw(in: frame)
+                        }
                     }
                 }
-            }
-            for i in 1..<numOfImage{
-                let path =  UIBezierPath()
-                let iCGFloat = CGFloat(i)
-                let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
-                if(i % 2 != 0){
-                    print(i)
-                    path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0))
-                    path.addLine(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)+(CGFloat(additionWidth)), y: height))
-                    path.addLine(to: CGPoint(x: ((iCGFloat+1)*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: height))
-                    path.addLine(to: CGPoint(x: ((iCGFloat+1)*width/numOfImageCGFloat)+(CGFloat(additionWidth)), y: 0))
-                    path.close()
-//                    UIColor.white.setStroke()
-//                    path.lineWidth = 4
-//                    path.stroke()
-                    path.close()
-                    path.addClip()
-                    let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: width/CGFloat(numOfImage)+2*additionWidth, height: height)
-                    listImage[i].draw(in: frame)
-                    // Bỏ clip đi để còn vẽ típ
-                    UIGraphicsGetCurrentContext()?.resetClip()
+                for i in 1..<numOfImage{
+                    let path =  UIBezierPath()
+                    let iCGFloat = CGFloat(i)
+                    let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
+                    if(i % 2 != 0){
+                        print(i)
+                        path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)+(CGFloat(additionWidth)), y: height))
+                        path.addLine(to: CGPoint(x: ((iCGFloat+1)*singleImageWidth)-(CGFloat(additionWidth)), y: height))
+                        path.addLine(to: CGPoint(x: ((iCGFloat+1)*singleImageWidth)+(CGFloat(additionWidth)), y: 0))
+                        path.close()
+                        path.addClip()
+                        let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: width/CGFloat(numOfImage)+2*additionWidth, height: height)
+                        listImage[i].draw(in: frame)
+                        UIGraphicsGetCurrentContext()?.resetClip()
+                    }
                 }
-//                else{
-//                    path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)+(width/(4*numOfImageCGFloat)), y: 0))
-//                    path.addLine(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(width/(4*numOfImageCGFloat)), y: height))
-//                }
+                let path =  UIBezierPath()
+                for i in 1..<numOfImage{
+                    let iCGFloat = CGFloat(i)
+                    if(i % 2 != 0){
+                        path.move(to: CGPoint(x: (iCGFloat*singleImageWidth)-additionWidth, y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)+additionWidth, y: height))
+                    }
+                    else{
+                        path.move(to: CGPoint(x: (iCGFloat*singleImageWidth)+additionWidth, y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)-additionWidth, y: height))
+                    }
+                }
+                UIColor.white.setStroke()
+                path.lineWidth = 4
+                path.stroke()
+                path.close()
             }
-//            for i in 1
-            UIColor.white.setStroke()
-//            path.lineWidth = 4
-//            path.stroke()
-//            path.close()
-//            path.addClip()
+            finalImage = img
+            finalImageView.image = img
+        }else{
+            let img = renderer.image { ctx in
+                for i in 0..<numOfImage{
+                    if(i%2 == 0){
+                        if(i == 0){
+                            let width = singleImageWidth+CGFloat(additionWidth)
+                            let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage), y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
+                            listImage[i].draw(in: frame)
+                        }
+                        else if(i == numOfImage-1){
+                            let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage) - additionWidth, y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
+                            listImage[i].draw(in: frame)
+                        }
+                        else{
+                            let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: singleImageWidth+2*additionWidth, height: height)
+                            listImage[i].draw(in: frame)
+                        }
+                    }
+                }
+                for i in 1..<numOfImage{
+                    let path =  UIBezierPath()
+                    let iCGFloat = CGFloat(i)
+                    let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
+                    if(i % 2 != 0 && i != numOfImage-1){
+                        path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)+(CGFloat(additionWidth)), y: height))
+                        path.addLine(to: CGPoint(x: ((iCGFloat+1)*singleImageWidth)-(CGFloat(additionWidth)), y: height))
+                        path.addLine(to: CGPoint(x: ((iCGFloat+1)*singleImageWidth)+(CGFloat(additionWidth)), y: 0))
+                        path.close()
+                        path.addClip()
+                        let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: width/CGFloat(numOfImage)+2*additionWidth, height: height)
+                        listImage[i].draw(in: frame)
+                        UIGraphicsGetCurrentContext()?.resetClip()
+                    }else if(i == numOfImage - 1){
+                        print(i)
+                        path.move(to: CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)+(CGFloat(additionWidth)), y: height))
+                        path.addLine(to: CGPoint(x: ((iCGFloat+1)*singleImageWidth), y: height))
+                        path.addLine(to: CGPoint(x: ((iCGFloat+1)*singleImageWidth)+(CGFloat(additionWidth)), y: 0))
+                        path.close()
+                        path.addClip()
+                        let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: width/CGFloat(numOfImage)+2*additionWidth, height: height)
+                        listImage[i].draw(in: frame)
+                        UIGraphicsGetCurrentContext()?.resetClip()
+                    }
+                }
+                let path =  UIBezierPath()
+                for i in 1..<numOfImage{
+                    let iCGFloat = CGFloat(i)
+                    if(i % 2 != 0){
+                        path.move(to: CGPoint(x: (iCGFloat*singleImageWidth)-additionWidth, y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)+additionWidth, y: height))
+                    }
+                    else{
+                        path.move(to: CGPoint(x: (iCGFloat*singleImageWidth)+additionWidth, y: 0))
+                        path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)-additionWidth, y: height))
+                    }
+                }
+                UIColor.white.setStroke()
+                path.lineWidth = 4
+                path.stroke()
+                path.close()
+            }
+            finalImage = img
+            finalImageView.image = img
+
         }
-        finalImage = img
-        finalImageView.image = img
+        
     }
     func resetData(){
         for imageView in chosenImageViews {
