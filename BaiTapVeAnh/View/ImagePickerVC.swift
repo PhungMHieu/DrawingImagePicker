@@ -14,6 +14,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     @IBOutlet var finalImageView: UIImageView!
     var maxImageCount: Int = 5
     var numberOfImage: Int = 3
+    
     var listImage: [UIImage] = []{
         didSet{
             for imageView in chosenImageViews {
@@ -23,6 +24,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             }
         }
     }
+    
     private var listText: [NSAttributedString] {
         return nameTextFields.sorted { $0.tag < $1.tag }.map({ nameTextField in
                 .init(string: nameTextField.text ?? "Khuyết danh", attributes: textAttributes)
@@ -40,11 +42,13 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             .foregroundColor: UIColor.white
         ]
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
             view.addGestureRecognizer(tapGesture)
     }
+    
     private func openCamera() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
             print("Thiết bị không hỗ trợ camera")
@@ -60,6 +64,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             self.present(picker, animated: true)
         }
     }
+    
     func drawLineSeperate(numOfImage:Int,singleImageWidth:CGFloat,additionWidth:CGFloat,height:CGFloat){
         let path =  UIBezierPath()
         for i in 1..<numOfImage{
@@ -78,6 +83,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         path.stroke()
         path.close()
     }
+    
     func drawText(height: CGFloat, width: CGFloat, textBoundHeight: CGFloat){
         UIColor.systemBrown.setFill()
         UIBezierPath(rect: CGRect(origin: .init(x: .zero, y: height), size: .init(width: width, height: textBoundHeight))).fill()
@@ -89,6 +95,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         listAttributedText[3].draw(in: .init(x: width * 3/5, y: height, width: width/5, height: textBoundHeight))
         listAttributedText[4].draw(in: .init(x: width * 4/5, y: height, width: width/5, height: textBoundHeight))
     }
+    
     func drawImageWithoutDistorted(_ image: UIImage, in frame: CGRect){
         let imageAspect = image.size.width / image.size.height
             let frameAspect = frame.width / frame.height
@@ -109,28 +116,8 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             }
             image.draw(in: drawRect)
     }
-    func drawImageEdgeAspectFill(_ image: UIImage, in frame: CGRect) {
-        let imageAspect = image.size.width / image.size.height
-        let frameAspect = frame.width / frame.height
-
-        var drawRect = frame
-        if imageAspect > frameAspect {
-            let scale = frame.height / image.size.height
-            let width = image.size.width * scale
-            drawRect.origin.x = frame.midX - width / 2
-            drawRect.size.width = width
-        } else {
-            let scale = frame.width / image.size.width
-            let height = image.size.height * scale
-            drawRect.origin.y = frame.midY - height / 2
-            drawRect.size.height = height
-        }
-        image.draw(in: drawRect)
-    }
-
+    
     func drawPathAroundImage(startPoint: CGPoint,linePoint1: CGPoint, linePoint2: CGPoint, linePoint3: CGPoint, i:Int, path: UIBezierPath){
-//        let path = UIBezierPath()
-//        let iCGFLoat = CGFloat(i)
         path.move(to: startPoint)
         path.addLine(to: linePoint1)
         path.addLine(to: linePoint2)
@@ -138,6 +125,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         path.close()
         path.addClip()
     }
+    
     func drawImage(finalImageView: UIImageView, numOfImage: Int){
         let frame = finalImageView.bounds
         let textBoundHeight:CGFloat = 24
@@ -267,6 +255,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             finalImageView.image = img
         }
     }
+    
     func resetData(){
         for imageView in chosenImageViews {
             imageView.image = nil
@@ -276,6 +265,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         }
         listImage.removeAll()
     }
+    
     @IBAction func add(_ sender: UIButton) {
         resetData()
         var configuration = PHPickerConfiguration()
@@ -286,12 +276,14 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         present(picker, animated: true)
         
     }
+    
     @IBAction func createPoster(_ sender: Any) {
         if(!listImage.isEmpty){
             drawImage(finalImageView: self.finalImageView,numOfImage: listImage.count)
             resetData()
         }
     }
+    
     @IBAction func save(_ sender: Any) {
         if let image = finalImage{
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -299,8 +291,13 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             finalImage = nil
         }
     }
+    
     @IBAction func takeScreenShot(_ sender: Any) {
-        openCamera()
+//        openCamera()
+        let cameraVC = CameraVC()
+        cameraVC.modalPresentationStyle = .fullScreen
+        present(cameraVC, animated: true, completion: nil)
+        
     }
     
     @objc func hideKeyboard() {
@@ -321,6 +318,7 @@ extension ImagePickerVC: PHPickerViewControllerDelegate{
             }
         }
     }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
@@ -331,6 +329,7 @@ extension ImagePickerVC: PHPickerViewControllerDelegate{
         }
         
     }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }

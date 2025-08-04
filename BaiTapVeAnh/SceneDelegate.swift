@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //        let vc = ProfileVC()
         //        let vc = InformationVC()
 //        let vc = ImagePickerVC()
-        let vc = CameraVC()
+        let vc = ImagePickerVC()
         //        let vc = ListUserVC()
         let navi = UINavigationController(rootViewController: vc)
         window.rootViewController = navi
