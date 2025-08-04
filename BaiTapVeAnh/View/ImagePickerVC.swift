@@ -49,21 +49,21 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             view.addGestureRecognizer(tapGesture)
     }
     
-    private func openCamera() {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            print("Thiết bị không hỗ trợ camera")
-            return
-        }
-        
-        let picker = UIImagePickerController()
-        picker.sourceType = .camera
-        picker.allowsEditing = false
-        picker.delegate = self
-        
-        DispatchQueue.main.async {
-            self.present(picker, animated: true)
-        }
-    }
+//    private func openCamera() {
+//        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+//            print("Thiết bị không hỗ trợ camera")
+//            return
+//        }
+//        
+//        let picker = UIImagePickerController()
+//        picker.sourceType = .camera
+//        picker.allowsEditing = false
+//        picker.delegate = self
+//        
+//        DispatchQueue.main.async {
+//            self.present(picker, animated: true)
+//        }
+//    }
     
     func drawLineSeperate(numOfImage:Int,singleImageWidth:CGFloat,additionWidth:CGFloat,height:CGFloat){
         let path =  UIBezierPath()
@@ -89,11 +89,15 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         UIBezierPath(rect: CGRect(origin: .init(x: .zero, y: height), size: .init(width: width, height: textBoundHeight))).fill()
         
         let listAttributedText = listText
-        listAttributedText[0].draw(in: .init(x: 0, y: height, width: width/5, height: textBoundHeight))
-        listAttributedText[1].draw(in: .init(x: width/5, y: height, width: width/5, height: textBoundHeight))
-        listAttributedText[2].draw(in: .init(x: width * 2/5, y: height, width: width/5, height: textBoundHeight))
-        listAttributedText[3].draw(in: .init(x: width * 3/5, y: height, width: width/5, height: textBoundHeight))
-        listAttributedText[4].draw(in: .init(x: width * 4/5, y: height, width: width/5, height: textBoundHeight))
+        let numOfImage: Int = listImage.count
+        for i in 0..<listImage.count{
+            listAttributedText[i].draw(in: .init(x: CGFloat(i)*width/CGFloat(numOfImage), y: height, width: width/CGFloat(numOfImage), height: textBoundHeight))
+        }
+        
+//        listAttributedText[1].draw(in: .init(x: width/5, y: height, width: width/5, height: textBoundHeight))
+//        listAttributedText[2].draw(in: .init(x: width * 2/5, y: height, width: width/5, height: textBoundHeight))
+//        listAttributedText[3].draw(in: .init(x: width * 3/5, y: height, width: width/5, height: textBoundHeight))
+//        listAttributedText[4].draw(in: .init(x: width * 4/5, y: height, width: width/5, height: textBoundHeight))
     }
     
     func drawImageWithoutDistorted(_ image: UIImage, in frame: CGRect){
@@ -293,8 +297,10 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     }
     
     @IBAction func takeScreenShot(_ sender: Any) {
-//        openCamera()
         let cameraVC = CameraVC()
+        cameraVC.addImage = {[weak self] image in
+            self?.listImage.append(image)
+        }
         cameraVC.modalPresentationStyle = .fullScreen
         present(cameraVC, animated: true, completion: nil)
         
@@ -319,18 +325,18 @@ extension ImagePickerVC: PHPickerViewControllerDelegate{
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            listImage.append(image)
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        }else{
-            print("Không lấy được ảnh từ thư viện")
-        }
-        
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        picker.dismiss(animated: true)
+//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//            listImage.append(image)
+//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+//        }else{
+//            print("Không lấy được ảnh từ thư viện")
+//        }
+//        
+//    }
+//    
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        picker.dismiss(animated: true, completion: nil)
+//    }
 }

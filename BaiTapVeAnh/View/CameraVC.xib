@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraVC" customModule="BaiTapVeAnh" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="KID-8A-T6a" id="Wdn-8g-HKa"/>
                 <outlet property="captureButton" destination="fbO-vz-l8v" id="LGe-Wd-0Tf"/>
                 <outlet property="capturePreviewView" destination="HRi-PH-0Uz" id="hhm-ak-LyM"/>
                 <outlet property="toggleFlashButton" destination="gIs-hK-Z7I" id="gdX-Dy-og2"/>
@@ -24,48 +25,64 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Zn8-iS-diO" userLabel="All Stack View">
-                    <rect key="frame" x="0.0" y="100" width="393" height="652"/>
+                    <rect key="frame" x="0.0" y="44" width="393" height="808"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Sn-F5-mnu" userLabel="Nav Stack View">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRJ-5I-8aS">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KID-8A-T6a">
-                                    <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Sn-F5-mnu" userLabel="Nav Stack View">
+                                    <rect key="frame" x="24" y="0.0" width="353" height="56"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KID-8A-T6a">
+                                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="VMs-qj-9UF"/>
+                                                <constraint firstAttribute="width" secondItem="KID-8A-T6a" secondAttribute="height" id="WU3-4R-qxn"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="Close"/>
+                                            <connections>
+                                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Br5-TU-D7f"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIs-hK-Z7I">
+                                            <rect key="frame" x="305" y="4" width="48" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="gIs-hK-Z7I" secondAttribute="height" multiplier="1:1" id="yfi-Sx-y0o"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="Frame 123142"/>
+                                            <connections>
+                                                <action selector="toggleFlash:" destination="-1" eventType="touchUpInside" id="Laa-eP-3bk"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="56" id="VMs-qj-9UF"/>
-                                        <constraint firstAttribute="width" secondItem="KID-8A-T6a" secondAttribute="height" id="WU3-4R-qxn"/>
+                                        <constraint firstAttribute="height" constant="56" id="Wlb-RG-mBg"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="Close"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIs-hK-Z7I">
-                                    <rect key="frame" x="345" y="4" width="48" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="gIs-hK-Z7I" secondAttribute="height" multiplier="1:1" id="yfi-Sx-y0o"/>
-                                    </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="Frame 123142"/>
-                                    <connections>
-                                        <action selector="toggleFlash:" destination="-1" eventType="touchUpInside" id="Laa-eP-3bk"/>
-                                    </connections>
-                                </button>
+                                </stackView>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="56" id="Wlb-RG-mBg"/>
+                                <constraint firstAttribute="bottom" secondItem="2Sn-F5-mnu" secondAttribute="bottom" id="3RY-ia-1E1"/>
+                                <constraint firstItem="2Sn-F5-mnu" firstAttribute="top" secondItem="cRJ-5I-8aS" secondAttribute="top" id="3pN-Zh-61r"/>
+                                <constraint firstItem="2Sn-F5-mnu" firstAttribute="leading" secondItem="cRJ-5I-8aS" secondAttribute="leading" constant="24" id="c4S-cJ-g7E"/>
+                                <constraint firstAttribute="trailing" secondItem="2Sn-F5-mnu" secondAttribute="trailing" constant="16" id="kDG-ye-0WC"/>
+                                <constraint firstAttribute="height" constant="56" id="pzo-yA-9UE"/>
                             </constraints>
-                        </stackView>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HRi-PH-0Uz" userLabel="Preview">
-                            <rect key="frame" x="0.0" y="56" width="393" height="520"/>
+                            <rect key="frame" x="0.0" y="56" width="393" height="572"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djc-qB-gIS" userLabel="End View">
-                            <rect key="frame" x="0.0" y="576" width="393" height="76"/>
+                            <rect key="frame" x="0.0" y="628" width="393" height="180"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="V6V-Lf-AOe">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="76"/>
+                                    <rect key="frame" x="46" y="34" width="302" height="90"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Il4-i8-rpG">
-                                            <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                            <rect key="frame" x="0.0" y="7" width="76" height="76"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Il4-i8-rpG" secondAttribute="height" id="gF8-DF-7s0"/>
                                             </constraints>
@@ -73,7 +90,7 @@
                                             <buttonConfiguration key="configuration" style="plain" image="Import mage"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbO-vz-l8v">
-                                            <rect key="frame" x="166.66666666666666" y="0.0" width="76" height="76"/>
+                                            <rect key="frame" x="114" y="0.0" width="90" height="90"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="fbO-vz-l8v" secondAttribute="height" id="JXc-fY-MZU"/>
                                             </constraints>
@@ -81,7 +98,7 @@
                                             <buttonConfiguration key="configuration" style="plain" image="Take"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DjQ-IT-9Nk">
-                                            <rect key="frame" x="333" y="8" width="60" height="60"/>
+                                            <rect key="frame" x="242" y="15" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="DjQ-IT-9Nk" secondAttribute="height" id="WCK-CU-KuB"/>
                                             </constraints>
@@ -96,11 +113,10 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="V6V-Lf-AOe" firstAttribute="top" secondItem="djc-qB-gIS" secondAttribute="top" id="Ane-gs-6R9"/>
-                                <constraint firstAttribute="trailing" secondItem="V6V-Lf-AOe" secondAttribute="trailing" id="G9M-Ta-udh"/>
-                                <constraint firstAttribute="bottom" secondItem="V6V-Lf-AOe" secondAttribute="bottom" id="IPE-8B-blh"/>
-                                <constraint firstAttribute="height" constant="76" id="MWo-0S-VEJ"/>
-                                <constraint firstItem="V6V-Lf-AOe" firstAttribute="leading" secondItem="djc-qB-gIS" secondAttribute="leading" id="gcF-5f-nDl"/>
+                                <constraint firstItem="V6V-Lf-AOe" firstAttribute="leading" secondItem="djc-qB-gIS" secondAttribute="leading" constant="46" id="815-CK-bvZ"/>
+                                <constraint firstItem="V6V-Lf-AOe" firstAttribute="top" secondItem="djc-qB-gIS" secondAttribute="top" constant="34" id="Ane-gs-6R9"/>
+                                <constraint firstAttribute="trailing" secondItem="V6V-Lf-AOe" secondAttribute="trailing" constant="45" id="GHt-87-cfS"/>
+                                <constraint firstAttribute="bottom" secondItem="V6V-Lf-AOe" secondAttribute="bottom" constant="56" id="IPE-8B-blh"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -113,9 +129,9 @@
             <viewLayoutGuide key="safeArea" id="xni-kN-Gh1"/>
             <color key="backgroundColor" name="Neutral1Camera"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Zn8-iS-diO" secondAttribute="bottom" constant="100" id="Dix-Al-FdT"/>
+                <constraint firstAttribute="bottom" secondItem="Zn8-iS-diO" secondAttribute="bottom" id="Dix-Al-FdT"/>
                 <constraint firstItem="Zn8-iS-diO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QrJ-lc-a8z"/>
-                <constraint firstItem="Zn8-iS-diO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="YuZ-he-ZIu"/>
+                <constraint firstItem="Zn8-iS-diO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="YuZ-he-ZIu"/>
                 <constraint firstAttribute="trailing" secondItem="Zn8-iS-diO" secondAttribute="trailing" id="o0Q-1d-aZn"/>
             </constraints>
             <point key="canvasLocation" x="-25.190839694656489" y="19.718309859154932"/>
