@@ -7,15 +7,14 @@
 
 import UIKit
 import PhotosUI
-class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+class ImagePickerVC: UIViewController{
     @IBOutlet var addImageBtn: [UIButton]!
     @IBOutlet var chosenImageViews: [UIImageView]!
     @IBOutlet var nameTextFields: [UITextField]!
     @IBOutlet var finalImageView: UIImageView!
-    var maxImageCount: Int = 5
-    var numberOfImage: Int = 3
     
-    var listImage: [UIImage] = []{
+    var maxImageCount: Int = 5
+    var listImage: [UIImage] = [] {
         didSet{
             for imageView in chosenImageViews {
                 if(imageView.tag < listImage.count){
@@ -24,14 +23,14 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             }
         }
     }
-    
+
     private var listText: [NSAttributedString] {
         return nameTextFields.sorted { $0.tag < $1.tag }.map({ nameTextField in
                 .init(string: nameTextField.text ?? "Khuyết danh", attributes: textAttributes)
         })
     }
-    
     private var finalImage: UIImage?
+    
     
     lazy var textAttributes: [NSAttributedString.Key: Any] = {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -45,31 +44,16 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "EF - Meme Generator"
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
             view.addGestureRecognizer(tapGesture)
     }
     
-//    private func openCamera() {
-//        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-//            print("Thiết bị không hỗ trợ camera")
-//            return
-//        }
-//        
-//        let picker = UIImagePickerController()
-//        picker.sourceType = .camera
-//        picker.allowsEditing = false
-//        picker.delegate = self
-//        
-//        DispatchQueue.main.async {
-//            self.present(picker, animated: true)
-//        }
-//    }
-    
-    func drawLineSeperate(numOfImage:Int,singleImageWidth:CGFloat,additionWidth:CGFloat,height:CGFloat){
+    func drawLineSeperate (numOfImage:Int,singleImageWidth:CGFloat,additionWidth:CGFloat,height:CGFloat) {
         let path =  UIBezierPath()
-        for i in 1..<numOfImage{
+        for i in 1..<numOfImage {
             let iCGFloat = CGFloat(i)
-            if(i % 2 != 0){
+            if(i % 2 != 0) {
                 path.move(to: CGPoint(x: (iCGFloat*singleImageWidth)-additionWidth, y: 0))
                 path.addLine(to: CGPoint(x: (iCGFloat*singleImageWidth)+additionWidth, y: height))
             }
@@ -84,44 +68,39 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         path.close()
     }
     
-    func drawText(height: CGFloat, width: CGFloat, textBoundHeight: CGFloat){
+    func drawText(height: CGFloat, width: CGFloat, textBoundHeight: CGFloat) {
         UIColor.systemBrown.setFill()
         UIBezierPath(rect: CGRect(origin: .init(x: .zero, y: height), size: .init(width: width, height: textBoundHeight))).fill()
         
         let listAttributedText = listText
         let numOfImage: Int = listImage.count
-        for i in 0..<listImage.count{
+        for i in 0..<listImage.count {
             listAttributedText[i].draw(in: .init(x: CGFloat(i)*width/CGFloat(numOfImage), y: height, width: width/CGFloat(numOfImage), height: textBoundHeight))
         }
-        
-//        listAttributedText[1].draw(in: .init(x: width/5, y: height, width: width/5, height: textBoundHeight))
-//        listAttributedText[2].draw(in: .init(x: width * 2/5, y: height, width: width/5, height: textBoundHeight))
-//        listAttributedText[3].draw(in: .init(x: width * 3/5, y: height, width: width/5, height: textBoundHeight))
-//        listAttributedText[4].draw(in: .init(x: width * 4/5, y: height, width: width/5, height: textBoundHeight))
     }
     
-    func drawImageWithoutDistorted(_ image: UIImage, in frame: CGRect){
+    func drawImageWithoutDistorted(_ image: UIImage, in frame: CGRect) {
         let imageAspect = image.size.width / image.size.height
-            let frameAspect = frame.width / frame.height
-            
-            var drawRect = frame
-            if imageAspect > frameAspect {
-                // Ảnh rộng hơn → crop 2 bên
-                let scale = frame.height / image.size.height
-                let width = image.size.width * scale
-                drawRect.origin.x = frame.midX - width / 2
-                drawRect.size.width = width
-            } else {
-                // Ảnh cao hơn → crop trên dưới
-                let scale = frame.width / image.size.width
-                let height = image.size.height * scale
-                drawRect.origin.y = frame.midY - height / 2
-                drawRect.size.height = height
-            }
-            image.draw(in: drawRect)
+        let frameAspect = frame.width / frame.height
+        
+        var drawRect = frame
+        if imageAspect > frameAspect {
+            // Ảnh rộng hơn → crop 2 bên
+            let scale = frame.height / image.size.height
+            let width = image.size.width * scale
+            drawRect.origin.x = frame.midX - width / 2
+            drawRect.size.width = width
+        } else {
+            // Ảnh cao hơn → crop trên dưới
+            let scale = frame.width / image.size.width
+            let height = image.size.height * scale
+            drawRect.origin.y = frame.midY - height / 2
+            drawRect.size.height = height
+        }
+        image.draw(in: drawRect)
     }
     
-    func drawPathAroundImage(startPoint: CGPoint,linePoint1: CGPoint, linePoint2: CGPoint, linePoint3: CGPoint, i:Int, path: UIBezierPath){
+    func drawPathAroundImage(startPoint: CGPoint,linePoint1: CGPoint, linePoint2: CGPoint, linePoint3: CGPoint, i:Int, path: UIBezierPath) {
         path.move(to: startPoint)
         path.addLine(to: linePoint1)
         path.addLine(to: linePoint2)
@@ -130,7 +109,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         path.addClip()
     }
     
-    func drawImage(finalImageView: UIImageView, numOfImage: Int){
+    func drawImage(finalImageView: UIImageView, numOfImage: Int) {
         let frame = finalImageView.bounds
         let textBoundHeight:CGFloat = 24
         let width = frame.width
@@ -140,15 +119,16 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         let renderer = UIGraphicsImageRenderer(bounds: frame, format: rendererFormat)
         let additionWidth:CGFloat = width / CGFloat(6*numOfImage)
         let singleImageWidth = (width/CGFloat(numOfImage))
-        if(numOfImage % 2 != 0){
+        
+        if(numOfImage % 2 != 0) {
             let img = renderer.image { ctx in
-                for i in 0..<numOfImage{
-                    if(i%2 == 0){
+                for i in 0..<numOfImage {
+                    if(i%2 == 0) {
                         let path =  UIBezierPath()
                         let iCGFloat = CGFloat(i)
                         let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
                         print(i)
-                        if(i == 0){
+                        if(i == 0) {
                             let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat), y: 0)
                             let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth), y: height)
                             let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)+(CGFloat(additionWidth)), y: height)
@@ -157,7 +137,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
                             let frame = CGRect(x: width*CGFloat(i)/CGFloat(numOfImage), y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
                             drawImageWithoutDistorted(listImage[i], in: frame)
                             UIGraphicsGetCurrentContext()?.resetClip()
-                        }else if(i == numOfImage-1){
+                        } else if(i == numOfImage-1) {
                             let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-CGFloat(additionWidth), y: 0)
                             let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth)-CGFloat(additionWidth), y: height)
                             let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)+(CGFloat(additionWidth)), y: height)
@@ -166,7 +146,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
                             let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage) - additionWidth, y: 0, width: singleImageWidth+CGFloat(additionWidth), height: height)
                             drawImageWithoutDistorted(listImage[i], in: frame)
                             UIGraphicsGetCurrentContext()?.resetClip()
-                        }else{
+                        } else {
                             let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0)
                             let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth)-(CGFloat(additionWidth)), y: height)
                             let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)+2*(CGFloat(additionWidth)), y: height)
@@ -178,11 +158,11 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
                         }
                     }
                 }
-                for i in 1..<numOfImage{
+                for i in 1..<numOfImage {
                     let path =  UIBezierPath()
                     let iCGFloat = CGFloat(i)
                     let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
-                    if(i % 2 != 0){
+                    if(i % 2 != 0) {
                         let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0)
                         let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth)+(CGFloat(additionWidth)), y: height)
                         let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)-(CGFloat(additionWidth)), y: height)
@@ -199,14 +179,14 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             finalImage = img
             finalImageView.image = img
             
-        }else{
+        } else {
             let img = renderer.image { ctx in
-                for i in 0..<numOfImage{
-                    if(i%2 == 0){
+                for i in 0..<numOfImage {
+                    if(i%2 == 0) {
                         let path =  UIBezierPath()
                         let iCGFloat = CGFloat(i)
                         let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
-                        if(i == 0){
+                        if(i == 0) {
                             let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat), y: 0)
                             let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth), y: height)
                             let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)+(CGFloat(additionWidth)), y: height)
@@ -216,7 +196,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
                             drawImageWithoutDistorted(listImage[i], in: frame)
                             UIGraphicsGetCurrentContext()?.resetClip()
                         }
-                        else{
+                        else {
                             let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0)
                             let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth)-(CGFloat(additionWidth)), y: height)
                             let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)+2*(CGFloat(additionWidth)), y: height)
@@ -228,11 +208,11 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
                         }
                     }
                 }
-                for i in 1..<numOfImage{
+                for i in 1..<numOfImage {
                     let path =  UIBezierPath()
                     let iCGFloat = CGFloat(i)
                     let numOfImageCGFloat:CGFloat = CGFloat(numOfImage)
-                    if(i % 2 != 0 && i != numOfImage-1){
+                    if(i % 2 != 0 && i != numOfImage-1) {
                         let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0)
                         let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth)+(CGFloat(additionWidth)), y: height)
                         let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth)-(CGFloat(additionWidth)), y: height)
@@ -241,7 +221,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
                         let frame = CGRect(x: CGFloat(i)*width/CGFloat(numOfImage)-additionWidth, y: 0, width: width/CGFloat(numOfImage)+2*additionWidth, height: height)
                         drawImageWithoutDistorted(listImage[i], in: frame)
                         UIGraphicsGetCurrentContext()?.resetClip()
-                    }else if(i == numOfImage - 1){
+                    } else if(i == numOfImage - 1) {
                         let startPoint = CGPoint(x: (iCGFloat*width/numOfImageCGFloat)-(CGFloat(additionWidth)), y: 0)
                         let linePoint1 = CGPoint(x: (iCGFloat*singleImageWidth)+(CGFloat(additionWidth)), y: height)
                         let linePoint2 = CGPoint(x: ((iCGFloat+1)*singleImageWidth), y: height)
@@ -260,7 +240,7 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         }
     }
     
-    func resetData(){
+    func resetData() {
         for imageView in chosenImageViews {
             imageView.image = nil
         }
@@ -270,26 +250,31 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         listImage.removeAll()
     }
     
+    func notificationAboutImageOverLoad() {
+        let alert = UIAlertController(title: "Thông báo", message: "Số lượng đã vượt quá giới hạn", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+        NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func add(_ sender: UIButton) {
-        resetData()
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        configuration.selectionLimit = maxImageCount
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        present(picker, animated: true)
-        
+        if self.listImage.count < maxImageCount {
+            presentImagePicker()
+        } else {
+            notificationAboutImageOverLoad()
+        }
     }
     
     @IBAction func createPoster(_ sender: Any) {
-        if(!listImage.isEmpty){
+        if(!listImage.isEmpty) {
             drawImage(finalImageView: self.finalImageView,numOfImage: listImage.count)
             resetData()
         }
     }
     
     @IBAction func save(_ sender: Any) {
-        if let image = finalImage{
+        if let image = finalImage {
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             finalImageView.image = nil
             finalImage = nil
@@ -297,26 +282,38 @@ class ImagePickerVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     }
     
     @IBAction func takeScreenShot(_ sender: Any) {
-        let cameraVC = CameraVC()
-        cameraVC.addImage = {[weak self] image in
-            self?.listImage.append(image)
+        if (listImage.count >= maxImageCount) {
+            notificationAboutImageOverLoad()
+        } else {
+            let cameraVC = CameraVC()
+            cameraVC.addImage = {[weak self] image in
+                guard let self = self else { return }
+                self.listImage.append(image)
+                if(self.listImage.count >= maxImageCount) {
+                    self.dismiss(animated: true)
+                }
+            }
+            cameraVC.modalPresentationStyle = .fullScreen
+            present(cameraVC, animated: true, completion: nil)
         }
-        cameraVC.modalPresentationStyle = .fullScreen
-        present(cameraVC, animated: true, completion: nil)
-        
+    }
+    
+    @IBAction func reNewData(_ sender: Any) {
+        resetData()
     }
     
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
 }
-extension ImagePickerVC: PHPickerViewControllerDelegate{
+
+extension ImagePickerVC: PHPickerViewControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-        for i in 0..<results.count{
+        for i in 0..<results.count {
             let res = results[i]
-            if(res.itemProvider.canLoadObject(ofClass: UIImage.self)){
-                res.itemProvider.loadObject(ofClass: UIImage.self) { [weak self]image, error in
+            if(res.itemProvider.canLoadObject(ofClass: UIImage.self)) {
+                res.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
                     DispatchQueue.main.async {
                         self?.listImage.append(image as! UIImage)
                     }
@@ -325,18 +322,12 @@ extension ImagePickerVC: PHPickerViewControllerDelegate{
         }
     }
     
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        picker.dismiss(animated: true)
-//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//            listImage.append(image)
-//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-//        }else{
-//            print("Không lấy được ảnh từ thư viện")
-//        }
-//        
-//    }
-//    
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true, completion: nil)
-//    }
+    func presentImagePicker() {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = maxImageCount
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
 }
