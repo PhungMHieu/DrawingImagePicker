@@ -116,8 +116,12 @@ class CameraService:NSObject{
         captureSession.stopRunning()
     }
     
-    func setFrame(frame: CGRect){
+    func setFrameForPreview(frame: CGRect){
         self.previewLayer?.frame = frame
+    }
+    
+    func getIsUsingFrontCamera()->Bool{
+        return self.isUsingFrontCamera
     }
 }
 extension CameraService:AVCapturePhotoCaptureDelegate{

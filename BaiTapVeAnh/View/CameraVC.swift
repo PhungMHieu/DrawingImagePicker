@@ -27,7 +27,7 @@ class CameraVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        cameraService.setFrame(frame: self.capturePreviewView.bounds)
+        cameraService.setFrameForPreview(frame: self.capturePreviewView.bounds)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,7 +38,7 @@ class CameraVC: UIViewController {
     }
     
     func switchCameraAnimation(capturePreviewView:UIView) {
-        let transitionOptions: UIView.AnimationOptions = cameraService.isUsingFrontCamera
+        let transitionOptions: UIView.AnimationOptions = cameraService.getIsUsingFrontCamera()
         ? .transitionFlipFromLeft
         : .transitionFlipFromRight
         UIView.transition(with: capturePreviewView, duration: 0.3, options: transitionOptions, animations: nil, completion: nil)
