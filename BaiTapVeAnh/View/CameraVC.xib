@@ -31,12 +31,11 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Sn-F5-mnu" userLabel="Nav Stack View">
-                                    <rect key="frame" x="24" y="0.0" width="353" height="56"/>
+                                    <rect key="frame" x="24" y="0.0" width="345" height="56"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KID-8A-T6a">
-                                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                            <rect key="frame" x="0.0" y="4" width="48" height="48"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="56" id="VMs-qj-9UF"/>
                                                 <constraint firstAttribute="width" secondItem="KID-8A-T6a" secondAttribute="height" id="WU3-4R-qxn"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
@@ -46,7 +45,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIs-hK-Z7I">
-                                            <rect key="frame" x="305" y="4" width="48" height="48"/>
+                                            <rect key="frame" x="297" y="4" width="48" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="gIs-hK-Z7I" secondAttribute="height" multiplier="1:1" id="yfi-Sx-y0o"/>
                                             </constraints>
@@ -67,7 +66,7 @@
                                 <constraint firstAttribute="bottom" secondItem="2Sn-F5-mnu" secondAttribute="bottom" id="3RY-ia-1E1"/>
                                 <constraint firstItem="2Sn-F5-mnu" firstAttribute="top" secondItem="cRJ-5I-8aS" secondAttribute="top" id="3pN-Zh-61r"/>
                                 <constraint firstItem="2Sn-F5-mnu" firstAttribute="leading" secondItem="cRJ-5I-8aS" secondAttribute="leading" constant="24" id="c4S-cJ-g7E"/>
-                                <constraint firstAttribute="trailing" secondItem="2Sn-F5-mnu" secondAttribute="trailing" constant="16" id="kDG-ye-0WC"/>
+                                <constraint firstAttribute="trailing" secondItem="2Sn-F5-mnu" secondAttribute="trailing" constant="24" id="kDG-ye-0WC"/>
                                 <constraint firstAttribute="height" constant="56" id="pzo-yA-9UE"/>
                             </constraints>
                         </view>
