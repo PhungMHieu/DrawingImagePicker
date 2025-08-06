@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Zn8-iS-diO" userLabel="All Stack View">
-                    <rect key="frame" x="0.0" y="44" width="393" height="808"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRJ-5I-8aS">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
@@ -71,17 +71,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HRi-PH-0Uz" userLabel="Preview">
-                            <rect key="frame" x="0.0" y="56" width="393" height="572"/>
+                            <rect key="frame" x="0.0" y="56" width="393" height="420"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djc-qB-gIS" userLabel="End View">
-                            <rect key="frame" x="0.0" y="628" width="393" height="180"/>
+                            <rect key="frame" x="0.0" y="476" width="393" height="190"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="V6V-Lf-AOe">
-                                    <rect key="frame" x="46" y="34" width="302" height="90"/>
+                                    <rect key="frame" x="46" y="34" width="302" height="156"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Il4-i8-rpG">
-                                            <rect key="frame" x="0.0" y="7" width="76" height="76"/>
+                                            <rect key="frame" x="0.0" y="40" width="76" height="76"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Il4-i8-rpG" secondAttribute="height" id="gF8-DF-7s0"/>
                                             </constraints>
@@ -89,7 +89,7 @@
                                             <buttonConfiguration key="configuration" style="plain" image="Import mage"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbO-vz-l8v">
-                                            <rect key="frame" x="114" y="0.0" width="90" height="90"/>
+                                            <rect key="frame" x="109" y="28" width="100" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="fbO-vz-l8v" secondAttribute="height" id="JXc-fY-MZU"/>
                                             </constraints>
@@ -97,7 +97,7 @@
                                             <buttonConfiguration key="configuration" style="plain" image="Take"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DjQ-IT-9Nk">
-                                            <rect key="frame" x="242" y="15" width="60" height="60"/>
+                                            <rect key="frame" x="242" y="48" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="DjQ-IT-9Nk" secondAttribute="height" id="WCK-CU-KuB"/>
                                             </constraints>
@@ -115,7 +115,7 @@
                                 <constraint firstItem="V6V-Lf-AOe" firstAttribute="leading" secondItem="djc-qB-gIS" secondAttribute="leading" constant="46" id="815-CK-bvZ"/>
                                 <constraint firstItem="V6V-Lf-AOe" firstAttribute="top" secondItem="djc-qB-gIS" secondAttribute="top" constant="34" id="Ane-gs-6R9"/>
                                 <constraint firstAttribute="trailing" secondItem="V6V-Lf-AOe" secondAttribute="trailing" constant="45" id="GHt-87-cfS"/>
-                                <constraint firstAttribute="bottom" secondItem="V6V-Lf-AOe" secondAttribute="bottom" constant="56" id="IPE-8B-blh"/>
+                                <constraint firstAttribute="bottom" secondItem="V6V-Lf-AOe" secondAttribute="bottom" id="IPE-8B-blh"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -128,12 +128,12 @@
             <viewLayoutGuide key="safeArea" id="xni-kN-Gh1"/>
             <color key="backgroundColor" name="Neutral1Camera"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Zn8-iS-diO" secondAttribute="bottom" id="Dix-Al-FdT"/>
-                <constraint firstItem="Zn8-iS-diO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QrJ-lc-a8z"/>
-                <constraint firstItem="Zn8-iS-diO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="YuZ-he-ZIu"/>
-                <constraint firstAttribute="trailing" secondItem="Zn8-iS-diO" secondAttribute="trailing" id="o0Q-1d-aZn"/>
+                <constraint firstItem="xni-kN-Gh1" firstAttribute="top" secondItem="Zn8-iS-diO" secondAttribute="top" id="Tz0-k0-TiS"/>
+                <constraint firstItem="Zn8-iS-diO" firstAttribute="trailing" secondItem="xni-kN-Gh1" secondAttribute="trailing" id="f2P-kE-Kxe"/>
+                <constraint firstItem="Zn8-iS-diO" firstAttribute="bottom" secondItem="xni-kN-Gh1" secondAttribute="bottom" id="nZQ-zB-kDR"/>
+                <constraint firstItem="Zn8-iS-diO" firstAttribute="leading" secondItem="xni-kN-Gh1" secondAttribute="leading" id="tLF-vK-dde"/>
             </constraints>
-            <point key="canvasLocation" x="-25.190839694656489" y="19.718309859154932"/>
+            <point key="canvasLocation" x="-24" y="26"/>
         </view>
     </objects>
     <resources>
