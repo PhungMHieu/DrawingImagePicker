@@ -61,7 +61,7 @@
                                     </constraints>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" name="Neutral1Camera"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="2Sn-F5-mnu" secondAttribute="bottom" id="3RY-ia-1E1"/>
                                 <constraint firstItem="2Sn-F5-mnu" firstAttribute="top" secondItem="cRJ-5I-8aS" secondAttribute="top" id="3pN-Zh-61r"/>
@@ -78,10 +78,10 @@
                             <rect key="frame" x="0.0" y="476" width="393" height="190"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="V6V-Lf-AOe">
-                                    <rect key="frame" x="46" y="34" width="302" height="156"/>
+                                    <rect key="frame" x="46" y="34" width="302" height="122"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Il4-i8-rpG">
-                                            <rect key="frame" x="0.0" y="40" width="76" height="76"/>
+                                            <rect key="frame" x="0.0" y="23" width="76" height="76"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Il4-i8-rpG" secondAttribute="height" id="gF8-DF-7s0"/>
                                             </constraints>
@@ -89,7 +89,7 @@
                                             <buttonConfiguration key="configuration" style="plain" image="Import mage"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbO-vz-l8v">
-                                            <rect key="frame" x="109" y="28" width="100" height="100"/>
+                                            <rect key="frame" x="109" y="11" width="100" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="fbO-vz-l8v" secondAttribute="height" id="JXc-fY-MZU"/>
                                             </constraints>
@@ -97,7 +97,7 @@
                                             <buttonConfiguration key="configuration" style="plain" image="Take"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DjQ-IT-9Nk">
-                                            <rect key="frame" x="242" y="48" width="60" height="60"/>
+                                            <rect key="frame" x="242" y="31" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="DjQ-IT-9Nk" secondAttribute="height" id="WCK-CU-KuB"/>
                                             </constraints>
@@ -110,15 +110,16 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" name="Neutral1Camera"/>
                             <constraints>
                                 <constraint firstItem="V6V-Lf-AOe" firstAttribute="leading" secondItem="djc-qB-gIS" secondAttribute="leading" constant="46" id="815-CK-bvZ"/>
                                 <constraint firstItem="V6V-Lf-AOe" firstAttribute="top" secondItem="djc-qB-gIS" secondAttribute="top" constant="34" id="Ane-gs-6R9"/>
                                 <constraint firstAttribute="trailing" secondItem="V6V-Lf-AOe" secondAttribute="trailing" constant="45" id="GHt-87-cfS"/>
-                                <constraint firstAttribute="bottom" secondItem="V6V-Lf-AOe" secondAttribute="bottom" id="IPE-8B-blh"/>
+                                <constraint firstAttribute="bottom" secondItem="V6V-Lf-AOe" secondAttribute="bottom" constant="34" id="IPE-8B-blh"/>
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" name="Neutral1Camera"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="djc-qB-gIS" secondAttribute="trailing" id="c53-WD-ogJ"/>
                         <constraint firstItem="djc-qB-gIS" firstAttribute="leading" secondItem="Zn8-iS-diO" secondAttribute="leading" id="g4Q-BV-W6z"/>
